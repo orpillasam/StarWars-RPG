@@ -251,6 +251,7 @@ $(document).ready(function() {
 		player.healthPoints = player.healthPoints - opponent.counterAttackPower;
 		$("#player-total-hp").text(player.healthPoints);
 		console.log("player HP is " + player.healthPoints);
+		console.log("opponent counter attack power is " + opponent.counterAttackPower)
 		if (player.healthPoints <= 0){
 			gameLose();	
 		}
@@ -263,21 +264,52 @@ $(document).ready(function() {
 	}
 	//starst the game over again
 	function gameReset(){
-			gameStart = false;
-			rey.healthPoints = 100;
-			rey.attackPower = 6;
-			luke.healthPoints = 125;
-			enemiesRemaining = 1;
-			// console.log("game has been reset");
-			// console.log("rey's HP is " + rey.healthPoints);
-			// console.log("rey's atttack power is " + rey.attackPower);
-			// console.log("luke's HP is " + luke.healthPoints);
-			$("#rey").appendTo("#character-start-one");
-			$("#rey").css("border", "none" );
-			$("#luke").appendTo("#character-start-two");
-			$("#luke").css("border", "none" );
-			$("#maul").appendTo("#character-start-three");
-			$("#vader").appendTo("#character-start-four");
+			var players = 	[rey = {
+						name: "Rey",
+						healthPoints: 221,
+						initialAttackPower: 6,
+						attackPower: 6,
+						counterAttackPower: 5,
+						isPlayerOne: false,
+						isPlayerTwo: false,
+						isDead: false,
+					}, 
+					luke = {
+						name: "Luke Skywalker",
+						healthPoints: 125,
+						initialAttackPower: 5,
+						attackPower: 5,
+						counterAttackPower: 10,
+						isPlayerOne: false,
+						isPlayerTwo: false,
+						isDead: false,
+					},
+					maul = {
+						name: "Darth Maul",
+						healthPoints: 150,
+						initialAttackPower: 4,	
+						attackPower: 4,
+						counterAttackPower: 15,
+						isPlayerOne: false,
+						isPlayerTwo: false,
+						isDead: false,
+					},
+					vader = {
+						name: "Darth Vader",
+						healthPoints: 180,
+						initialAttackPower: 2,
+						attackPower: 2,
+						counterAttackPower: 25,
+						isPlayerOne: false,
+						isPlayerTwo: false,
+						isDead: false,
+					}
+					]
+			$("#rey").appendTo(".character-selection-section");
+			$("#luke").appendTo(".character-selection-section");
+			$("#maul").appendTo(".character-selection-section");
+			$("#vader").appendTo(".character-selection-section");
+			console.log("game has reset");
 			playerSelect();
 	}
 
@@ -303,6 +335,7 @@ $(document).ready(function() {
 			if (gameStart === true){
 		        lightsaberClash.play();    	
 				attack();
+				increaseAttackPower();
 				// console.log("opponent's HP is " + opponent.healthPoints);
 				if (opponent.healthPoints <= 0){
 				enemiesRemaining--;
@@ -310,7 +343,7 @@ $(document).ready(function() {
 				checkProgress();
 				}
 				else {
-				increaseAttackPower();
+				
 				// console.log("player's attack power is " + player.attackPower);
 				counterAttack();
 				lightsaberClash.play();
