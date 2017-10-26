@@ -3,7 +3,7 @@ $(document).ready(function() {
 // an array of objects(players)
 	var players = 	[rey = {
 						name: "Rey",
-						healthPoints: 221,
+						healthPoints: 100,
 						initialAttackPower: 6,
 						attackPower: 6,
 						counterAttackPower: 5,
@@ -42,28 +42,7 @@ $(document).ready(function() {
 						isDead: false,
 					}
 					]
-			 	// 	player = {
-					// 	name: 
-					// 	healthPoints,
-					// 	initialAttackPower,
-					// 	attackPower,
-					// 	counterAttackPower,
-					// 	isPlayerOne,
-					// 	isPlayerTwo,
-					// 	isDead,
-					// }, 
-					// opponent = {
-					// 	name,
-					// 	healthPoints,
-					// 	initialAttackPower,
-					// 	attackPower,
-					// 	counterAttackPower,
-					// 	isPlayerOne,
-					// 	isPlayerTwo,
-					// 	isDead,
-					// },
-	var player;
-	var opponent;
+
 	playerOneSelected = false;
 	playerTwoSelected = false;
 	gameStart = false;
@@ -85,7 +64,7 @@ $(document).ready(function() {
 	console.log("player one is " + playerOneSelected);
 	//reset players back to original starting position with no styling
 
-	function playerSelect(){
+	function playerSelect(player){
 	
 		$("#rey").on("click", function() {
 			if (playerOneSelected === false){
@@ -97,7 +76,6 @@ $(document).ready(function() {
 			$("#player-total-hp").text(rey.healthPoints);
 			playerOneSelected = true;
 			rey.isPlayerOne = true;
-			player = rey;
 			enemySelect();
 			console.log("player one is " + playerOneSelected);
 			}
@@ -113,7 +91,6 @@ $(document).ready(function() {
 				$("#player-total-hp").text(luke.healthPoints);
 				playerOneSelected = true;
 				luke.isPlayerOne = true;
-				player = luke;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
@@ -130,7 +107,6 @@ $(document).ready(function() {
 				$("#player-total-hp").text(maul.healthPoints);
 				playerOneSelected = true;
 				maul.isPlayerOne = true;
-				player = maul;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
@@ -148,14 +124,13 @@ $(document).ready(function() {
 				$("#player-total-hp").text(vader.healthPoints);
 				playerOneSelected = true;
 				vader.isPlayerOne = true;
-				player = darth;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
 		});	
 	}
 
-	function enemySelect(){
+	function enemySelect(opponent){
 		//HTML - display "select your opponent"
 		$("#rey").on("click", function() {
 			if (playerTwoSelected === false && rey.isPlayerOne === false){
@@ -168,7 +143,6 @@ $(document).ready(function() {
 			playerTwoSelected = true;
 			isPlayerTwo = true;
 			gameStart = true;
-			opponent = rey;
 			console.log("player two is " + playerTwoSelected);
 			startBattle();
 			}
@@ -185,7 +159,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = luke;
 				console.log("gamestart is " + gameStart);
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
@@ -203,7 +176,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = maul;
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
 			}
@@ -220,7 +192,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = vader;
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
 			}
@@ -233,7 +204,6 @@ $(document).ready(function() {
 		}
 		else {
 			playerTwoSelected = false;
-			gameStart = false;
 			$("#opponent-fight-area").html('');
 			$("#opponent-name").text("");
 			$("#opponent-total-hp").text("");
@@ -243,8 +213,8 @@ $(document).ready(function() {
 
 	function attack(){
 		opponent.healthPoints = opponent.healthPoints - player.attackPower;
-		$("#opponent-total-hp").text(opponent.healthPoints);
-		console.log("opponent HP is " + opponent.healthPoints);
+		$("#opponent-total-hp").text(player.healthPoints);
+		console.log("opponent HP is " + opponent.healthPoints):
 	}
 
 	function counterAttack(){
@@ -283,7 +253,6 @@ $(document).ready(function() {
 
 	function gameWin() {
 		console.log("you win")
-		alert("you win!");
 		//player win screen
 		//player win music
 		gameReset();

@@ -3,7 +3,7 @@ $(document).ready(function() {
 // an array of objects(players)
 	var players = 	[rey = {
 						name: "Rey",
-						healthPoints: 221,
+						healthPoints: 100,
 						initialAttackPower: 6,
 						attackPower: 6,
 						counterAttackPower: 5,
@@ -42,34 +42,13 @@ $(document).ready(function() {
 						isDead: false,
 					}
 					]
-			 	// 	player = {
-					// 	name: 
-					// 	healthPoints,
-					// 	initialAttackPower,
-					// 	attackPower,
-					// 	counterAttackPower,
-					// 	isPlayerOne,
-					// 	isPlayerTwo,
-					// 	isDead,
-					// }, 
-					// opponent = {
-					// 	name,
-					// 	healthPoints,
-					// 	initialAttackPower,
-					// 	attackPower,
-					// 	counterAttackPower,
-					// 	isPlayerOne,
-					// 	isPlayerTwo,
-					// 	isDead,
-					// },
-	var player;
-	var opponent;
+
 	playerOneSelected = false;
 	playerTwoSelected = false;
 	gameStart = false;
 	var enemyHealthPoints;
 	var enemyCounterAttackPower;
-	var enemiesRemaining = players.length -1 ;
+	var enemiesRemaining = players.length;
 	console.log("enemies remaining is " + enemiesRemaining)
 
 	var lightsaberClash = document.createElement("audio");
@@ -97,7 +76,6 @@ $(document).ready(function() {
 			$("#player-total-hp").text(rey.healthPoints);
 			playerOneSelected = true;
 			rey.isPlayerOne = true;
-			player = rey;
 			enemySelect();
 			console.log("player one is " + playerOneSelected);
 			}
@@ -113,7 +91,6 @@ $(document).ready(function() {
 				$("#player-total-hp").text(luke.healthPoints);
 				playerOneSelected = true;
 				luke.isPlayerOne = true;
-				player = luke;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
@@ -130,7 +107,6 @@ $(document).ready(function() {
 				$("#player-total-hp").text(maul.healthPoints);
 				playerOneSelected = true;
 				maul.isPlayerOne = true;
-				player = maul;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
@@ -148,7 +124,6 @@ $(document).ready(function() {
 				$("#player-total-hp").text(vader.healthPoints);
 				playerOneSelected = true;
 				vader.isPlayerOne = true;
-				player = darth;
 				console.log("player one is " + playerOneSelected);
 				enemySelect();
 			}
@@ -168,7 +143,6 @@ $(document).ready(function() {
 			playerTwoSelected = true;
 			isPlayerTwo = true;
 			gameStart = true;
-			opponent = rey;
 			console.log("player two is " + playerTwoSelected);
 			startBattle();
 			}
@@ -185,7 +159,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = luke;
 				console.log("gamestart is " + gameStart);
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
@@ -203,7 +176,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = maul;
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
 			}
@@ -220,7 +192,6 @@ $(document).ready(function() {
 				playerTwoSelected = true;
 				isPlayerTwo = true;
 				gameStart = true;
-				opponent = vader;
 				console.log("player two is " + playerTwoSelected);
 				startBattle();
 			}
@@ -233,7 +204,6 @@ $(document).ready(function() {
 		}
 		else {
 			playerTwoSelected = false;
-			gameStart = false;
 			$("#opponent-fight-area").html('');
 			$("#opponent-name").text("");
 			$("#opponent-total-hp").text("");
@@ -242,23 +212,20 @@ $(document).ready(function() {
 	}
 
 	function attack(){
-		opponent.healthPoints = opponent.healthPoints - player.attackPower;
-		$("#opponent-total-hp").text(opponent.healthPoints);
-		console.log("opponent HP is " + opponent.healthPoints);
+		luke.healthPoints = luke.healthPoints - rey.attackPower;
+		$("#opponent-total-hp").text(luke.healthPoints);
 	}
 
 	function counterAttack(){
-		player.healthPoints = player.healthPoints - opponent.counterAttackPower;
-		$("#player-total-hp").text(player.healthPoints);
-		console.log("player HP is " + player.healthPoints);
-		if (player.healthPoints <= 0){
+		rey.healthPoints = rey.healthPoints - luke.counterAttackPower;
+		$("#player-total-hp").text(rey.healthPoints);
+		if (rey.healthPoints <= 0){
 			gameLose();	
 		}
 	}
 
 	function increaseAttackPower(){
-		player.attackPower = player.attackPower + player.initialAttackPower;
-		console.log("player attack power is " + player.attackPower);
+		rey.attackPower = rey.attackPower + rey.initialAttackPower;
 		//user attack power increases. (attackPower = attackPower + initialAttackPower)
 	}
 	//starst the game over again
@@ -268,10 +235,10 @@ $(document).ready(function() {
 			rey.attackPower = 6;
 			luke.healthPoints = 125;
 			enemiesRemaining = 1;
-			// console.log("game has been reset");
-			// console.log("rey's HP is " + rey.healthPoints);
-			// console.log("rey's atttack power is " + rey.attackPower);
-			// console.log("luke's HP is " + luke.healthPoints);
+			console.log("game has been reset");
+			console.log("rey's HP is " + rey.healthPoints);
+			console.log("rey's atttack power is " + rey.attackPower);
+			console.log("luke's HP is " + luke.healthPoints);
 			$("#rey").appendTo("#character-start-one");
 			$("#rey").css("border", "none" );
 			$("#luke").appendTo("#character-start-two");
@@ -283,7 +250,6 @@ $(document).ready(function() {
 
 	function gameWin() {
 		console.log("you win")
-		alert("you win!");
 		//player win screen
 		//player win music
 		gameReset();
@@ -303,18 +269,18 @@ $(document).ready(function() {
 			if (gameStart === true){
 		        lightsaberClash.play();    	
 				attack();
-				// console.log("opponent's HP is " + opponent.healthPoints);
-				if (opponent.healthPoints <= 0){
+				console.log("luke's HP is " + luke.healthPoints);
+				if (luke.healthPoints <= 0){
 				enemiesRemaining--;
 				console.log("enemies remaining is " + enemiesRemaining);
 				checkProgress();
 				}
 				else {
 				increaseAttackPower();
-				// console.log("player's attack power is " + player.attackPower);
+				console.log("rey's attack power is " + rey.attackPower);
 				counterAttack();
 				lightsaberClash.play();
-				// console.log("rey's HP is " + player.healthPoints);
+				console.log("rey's HP is " + rey.healthPoints);
 				}
 			}
 			
