@@ -361,6 +361,7 @@ $(document).ready(function() {
 		console.log("you lose");
 		palpatineDestroyed.play();
 		setTimeout(function(){$("#game-end-container").html("<img id='palpatine' src='assets/images/palpatine_lightning.gif'/>")}, 1000*3);
+		$("#game-end-text-container").html("Game Over");
 		$("#game-end-text-container").css({"color":"red", "font-size":"30px","font-family":"Trade Winds", 
 			"position":"absolute", "left":"50%", "margin-right":"-50%", "transform":"translate(-50%)", 
 			"text-shadow": "2px 2px 2px rgba(255,255,255,.6)"});
