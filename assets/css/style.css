@@ -3,6 +3,7 @@ p* {
 }
 body{
 	background-image: url("../../assets/images/space_background.jpg");
+	z-index: -98;
 color: white;
 
 }
@@ -52,10 +53,10 @@ color: white;
 }
 
 .character-selection-section{
-	width: 800px;
+	width: 810px;
 	height: 160px ;
 	max-width: 900px;
-	border-bottom: solid red 3px;
+	border-bottom: solid red 5px;
 /*	left: 50%;
     margin-right: -50%;
     transform: translate(-50%) */
@@ -70,10 +71,10 @@ color: white;
 .arena{
 	clear: both;
 	position: relative;
-	width: 900px;
-	max-width: 900px;
-	height: 350px;
-	margin-bottom: 20px;
+	width: 800px;
+	max-width: 800px;
+	height: 360px;
+	margin-bottom: 10px;
 }
 
 #throne-room{
@@ -95,7 +96,7 @@ color: white;
 
 #opponent-fight-area{
 	position: absolute; 
-	right: 350px;
+	right: 250px;
 	top: 180px;
 }
 
@@ -118,7 +119,7 @@ color: white;
 #opponent-name{
 	font-family: 'Trade Winds', cursive;
 	position: absolute;
-	right: 200px;
+	right: 100px;
 	top: 10px;
 }
 
@@ -131,7 +132,7 @@ color: white;
 #opponent-hp {
 	font-family: 'Trade Winds', cursive;
 	position: absolute;
-	right: 200px;
+	right: 100px;
 	top: 40px;
 }
 
@@ -146,13 +147,14 @@ color: white;
 #opponent-total-hp {
 	font-family: 'Trade Winds', cursive;
 	position: absolute;
-	right: 200px;
+	right: 100px;
 	top: 70px;
 }
 
 #select-text {
 	width: 800px;
 	height: 50px;
+	line-height: 50px;
 	text-align: center;
 	font-family: 'Trade Winds', cursive;
 	font-size: 20px;
@@ -164,6 +166,50 @@ color: white;
     left: 50%;
     margin-right: -50%;
     transform: translate(-50%); 
+}
 
+#palpatine {
+	width: 600px;
+	height: auto;
+	border: solid 10px red;
+	position: absolute;
+	z-index: 99;
+	left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%); 
+    bottom: 100px;
+}
+
+#game-over{
+	position: absolute;
+	text-align: center;
+	font-family: 'Trade Winds', cursive;
+	font-size: 70px;
+	text-shadow: 2px 2px 2px rgba(255, 255, 255, .6);
+	color: rgba(237, 7, 7, 1);
+	z-index: -100;
+	left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%); 
+    top: 500px;
+}
+#game-win{
+	position: absolute;
+	text-align: center;
+	font-family: 'Trade Winds', cursive;
+	font-size: 70px;
+	text-shadow: 2px 2px 2px rgba(255, 255, 255, .6);
+	color: rgba(237, 7, 7, 1);
+	z-index: -100;
+	left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%); 
+    top: 500px;
+}
+
+#attack-button{
+	color: white;
+	background-color: red;
+	font-family: 'Trade Winds', cursive;
 
 }
