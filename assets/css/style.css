@@ -57,7 +57,7 @@ color: white;
 	height: 160px ;
 	max-width: 900px;
 	border-bottom: solid red 5px;
-	display: block;
+/*	display: inline;*/
 /*	left: 50%;
     margin-right: -50%;
     transform: translate(-50%) */
