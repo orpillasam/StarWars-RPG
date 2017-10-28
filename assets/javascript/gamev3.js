@@ -1,5 +1,6 @@
 $(document).ready(function() {
 
+// an array of objects(players)
 	var players = 	[rey = {
 						name: "Rey",
 						healthPoints: 120,
@@ -8,6 +9,7 @@ $(document).ready(function() {
 						counterAttackPower: 2,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					}, 
 					luke = {
 						name: "Luke Skywalker",
@@ -17,6 +19,7 @@ $(document).ready(function() {
 						counterAttackPower: 5,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					},
 					maul = {
 						name: "Darth Maul",
@@ -26,6 +29,7 @@ $(document).ready(function() {
 						counterAttackPower: 20,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					},
 					vader = {
 						name: "Darth Vader",
@@ -35,32 +39,51 @@ $(document).ready(function() {
 						counterAttackPower: 25,
 						isPlayerOne: false,
 						isPlayerTwo: false,
-					}]				
+						isDead: false,
+					}
+					]
 	//var images = ["assets/images/rey_small.png", "assets/images/luke_skywalker_small.png", "assets/images/darth_maul.png", "assets/images/darth_vader_small.png", "assets/images/palpatine_lightning.gif"];	
 	var player;
 	var opponent;
 	playerOneSelected = false;
 	playerTwoSelected = false;
 	gameStart = false;
+	var enemyHealthPoints;
+	var enemyCounterAttackPower;
 	var enemiesRemaining = players.length -1;
+	console.log("enemies remaining is " + enemiesRemaining)
+
 	var lightsaberClash = new Audio ("assets/audio/lightsaber_clash.mp3");
 	var lukeFeeling = new Audio ("assets/audio/luke_feeling.wav");
 	var buttonSelect = new Audio ("assets/audio/button_select.mp3");
-	var palpatineApprentice = new Audio ("assets/audio/palpatine_apprentice.mp3");
-	var palpatineKill = new Audio ("assets/audio/palpatine_kill.mp3");
-	var palpatineGood = new Audio ("assets/audio/palpatine_good.mp3");	
-	var palpatineStrong = new Audio ("assets/audio/palpatine_strong.mp3");
-	var palpatineDestroyed = new Audio ("assets/audio/palpatine_destroyed.mp3");
-	var palpatinePowerful = new Audio ("assets/audio/palpatine_powerful.mp3");
+	var palpatineApprentice = new Audiodocument.createElement("audio");
+	palpatineApprentice.setAttribute("src", "assets/audio/palpatine_apprentice.mp3");
+
+	var palpatineKill = document.createElement("audio");
+	palpatineKill.setAttribute("src", "assets/audio/palpatine_kill.mp3");
+
+	var palpatineGood = document.createElement("audio");
+	palpatineGood.setAttribute("src", "assets/audio/palpatine_good.mp3");
+		
+	var palpatineStrong = document.createElement("audio");
+	palpatineStrong.setAttribute("src", "assets/audio/palpatine_strong.mp3");
+
+	var palpatineDestroyed = document.createElement("audio");
+	palpatineDestroyed.setAttribute("src", "assets/audio/palpatine_destroyed.mp3");
+
+	var palpatinePowerful = document.createElement("audio");
+	palpatinePowerful.setAttribute("src", "assets/audio/palpatine_powerful.mp3");
 
 	playerSelect();
-
+	console.log("player one is " + playerOneSelected);
+	//reset players back to original starting position with no styling
 	startBattle();
 
 	function playerSelect(){
+	
 		$("#rey").on("click", function() {
 			if (playerOneSelected === false){
-					console.log("rey is first player");
+				console.log("rey is first player");
 				buttonSelect.play();
 				$("#rey").appendTo("#player-fight-area");
 				$("#player-name").text(rey.name);
@@ -72,13 +95,13 @@ $(document).ready(function() {
 				$("#rey").addClass('flipped');
 				palpatineApprentice.play();
 				setTimeout(enemySelect, 1000 *2.5);
-					console.log("player one is " + playerOneSelected);
+				console.log("player one is " + playerOneSelected);
 				}
 		});	
 	
 		$("#luke").on("click", function() {
 			if (playerOneSelected === false){
-					console.log("luke is first player");
+				console.log("luke is first player");
 				buttonSelect.play();
 				$("#luke").appendTo("#player-fight-area");
 				$("#player-name").text(luke.name);
@@ -89,14 +112,14 @@ $(document).ready(function() {
 				player = luke;
 				$("#luke").addClass('flipped');
 				palpatineApprentice.play();
-					console.log("player one is " + playerOneSelected);
+				console.log("player one is " + playerOneSelected);
 				setTimeout(enemySelect, 1000 *2.5);
 			}
 		});	
 	
 		$("#maul").on("click", function() {
 			if (playerOneSelected === false){
-					console.log("maul is first player");
+				console.log("maul is first player");
 				buttonSelect.play();
 				$("#maul").appendTo("#player-fight-area");
 				$("#player-name").text(maul.name);
@@ -107,14 +130,14 @@ $(document).ready(function() {
 				maul.isPlayerOne = true;
 				player = maul;
 				palpatineApprentice.play();
-					console.log("player one is " + playerOneSelected);
+				console.log("player one is " + playerOneSelected);
 				setTimeout(enemySelect, 1000 *2.5);
 			}
 		});	
 	
 		$("#vader").on("click", function() {
 			if (playerOneSelected === false){
-					console.log("vader is first player");
+				console.log("vader is first player");
 				buttonSelect.play();
 				$("#vader").appendTo("#player-fight-area");
 				$("vader").addClass('flipped');
@@ -126,7 +149,7 @@ $(document).ready(function() {
 				player = vader;
 				$("#vader").addClass('flipped');
 				palpatineApprentice.play();
-					console.log("player one is " + playerOneSelected);
+				console.log("player one is " + playerOneSelected);
 				setTimeout(enemySelect, 1000 *2.5);
 			}
 		});	
@@ -137,7 +160,7 @@ $(document).ready(function() {
 		//HTML - display "select your opponent"
 		$("#rey").on("click", function() {
 			if (playerTwoSelected === false && rey.isPlayerOne === false){
-				console.log("rey is second player");
+			console.log("rey is second player");
 			buttonSelect.play();
 			$("#rey").appendTo("#opponent-fight-area");
 			$("#opponent-name").text(rey.name);
@@ -149,13 +172,13 @@ $(document).ready(function() {
 			opponent = rey;
 			$("#select-text").text("");
 			palpatineKill.play();
-				console.log("player two is " + playerTwoSelected);
+			console.log("player two is " + playerTwoSelected);
 			}
 		});	
 	
 		$("#luke").on("click", function() {
 			if (playerTwoSelected === false && luke.isPlayerOne === false){
-					console.log("luke is second player");
+				console.log("luke is second player");
 				buttonSelect.play();
 				$("#luke").appendTo("#opponent-fight-area");
 				$("#opponent-name").text(luke.name);
@@ -167,14 +190,14 @@ $(document).ready(function() {
 				opponent = luke;
 				$("#select-text").text("");
 				palpatineKill.play();
-					console.log("gamestart is " + gameStart);
-					console.log("player two is " + playerTwoSelected);
+				console.log("gamestart is " + gameStart);
+				console.log("player two is " + playerTwoSelected);
 			}
 		});	
 	
 		$("#maul").on("click", function() {
 			if (playerTwoSelected === false && maul.isPlayerOne === false){
-					console.log("maul is second player");
+				console.log("maul is second player");
 				buttonSelect.play();
 				$("#maul").appendTo("#opponent-fight-area");
 				$("#opponent-name").text(maul.name);
@@ -187,13 +210,13 @@ $(document).ready(function() {
 				$("#maul").addClass('flipped');
 				$("#select-text").text("");
 				palpatineKill.play();
-					console.log("player two is " + playerTwoSelected);
+				console.log("player two is " + playerTwoSelected);
 			}
 		});	
 	
 		$("#vader").on("click", function() {
 			if (playerTwoSelected === false && vader.isPlayerOne === false){
-					console.log("vader is second player");
+				console.log("vader is second player");
 				buttonSelect.play();
 				$("#vader").appendTo("#opponent-fight-area");
 				$("#opponent-name").text(vader.name);
@@ -205,7 +228,7 @@ $(document).ready(function() {
 				opponent = vader;
 				$("#select-text").text("");
 				palpatineKill.play();
-					console.log("player two is " + playerTwoSelected);
+				console.log("player two is " + playerTwoSelected);
 			}
 		});	
 	}
@@ -222,32 +245,26 @@ $(document).ready(function() {
 				else if (enemiesRemaining === 1){
 					palpatineStrong.play();
 		}
-			$("#opponent-fight-area").html('');
 			$("#opponent-").html('');
 			$("#opponent-name").text("");
 			$("#opponent-total-hp").text("");
 			setTimeout(function(){playerTwoSelected = false}, 1000 * 2.8);
 			setTimeout(function(){$("#select-text").text("Select your Opponent")}, 1000 *2.8);
-				console.log("player two selected is " + playerTwoSelected);
+			console.log("player two selected is " + playerTwoSelected);
 		}	
 	}
 
 	function attack(){
-		options = {duration: 200,
-			easing: 'linear'}
 		opponent.healthPoints = opponent.healthPoints - player.attackPower;
 		$("#opponent-total-hp").text(opponent.healthPoints);
-			console.log("opponent HP is " + opponent.healthPoints);
-		// $("#rey").animate({left: 280}, options);
-		// $("#rey").animate({right: 280}, options);
-		// setTimeout(function() { lightsaberClash.play(); } 3000);
+		console.log("opponent HP is " + opponent.healthPoints);
 	}
 
 	function counterAttack(){
 		player.healthPoints = player.healthPoints - opponent.counterAttackPower;
 		$("#player-total-hp").text(player.healthPoints);
-			console.log("player HP is " + player.healthPoints);
-			console.log("opponent counter attack power is " + opponent.counterAttackPower)
+		console.log("player HP is " + player.healthPoints);
+		console.log("opponent counter attack power is " + opponent.counterAttackPower)
 		if (player.healthPoints <= 0){
 			gameLose();	
 		}
@@ -255,37 +272,58 @@ $(document).ready(function() {
 
 	function increaseAttackPower(){
 		player.attackPower = player.attackPower + player.initialAttackPower;
-			console.log("player attack power is " + player.attackPower);
-	}	
+		console.log("player attack power is " + player.attackPower);
+	}
 	//starst the game over again
 	function gameReset(){
 			var players = 	[rey = {
-						healthPoints: 120,
-						attackPower: 8,
+						name: "Rey",
+						healthPoints: 221,
+						initialAttackPower: 6,
+						attackPower: 6,
+						counterAttackPower: 5,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					}, 
 					luke = {
-						healthPoints: 100,
-						attackPower: 9,
+						name: "Luke Skywalker",
+						healthPoints: 125,
+						initialAttackPower: 5,
+						attackPower: 5,
+						counterAttackPower: 10,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					},
 					maul = {
-						healthPoints: 150,	
-						attackPower: 2,
+						name: "Darth Maul",
+						healthPoints: 150,
+						initialAttackPower: 4,	
+						attackPower: 4,
+						counterAttackPower: 15,
 						isPlayerOne: false,
 						isPlayerTwo: false,
+						isDead: false,
 					},
 					vader = {
+						name: "Darth Vader",
 						healthPoints: 180,
-						attackPower: 1,
+						initialAttackPower: 3,
+						attackPower: 3,
+						counterAttackPower: 25,
 						isPlayerOne: false,
 						isPlayerTwo: false,
-					}]				
+						isDead: false,
+					}
+					]
 			playerOneSelected = false;
 			playerTwoSelected = false;
-			$("#game-end-container",).html("");
+			rey.isPlayerOne = false;
+			luke.isPlayerOne = false;
+			maul.isPlayerOne = false;
+			vader.isPlayerOne = false;
+			$("#game-end-container").html("");
 			$("#game-end-text-container").html("");
 			$("#opponent-name").text("");
 			$("#opponent-hp").text("");
@@ -296,16 +334,16 @@ $(document).ready(function() {
 			$("#player-fight-area").html("");
 			$("#opponent-fight-area").html("");
 			$(".character-selection-section").html("");
-			$(".character-selection-section").appendTo("<img class ='character' id='rey' src = 'assets/images/rey_small.png'/>");
-			$(".character-selection-section").appendTo("<img class ='character' id='luke' src = 'assets/images/luke_skywalker_small.png'/>");
-			$(".character-selection-section").appendTo("<img class ='character' id='maul' src = 'assets/images/darth_maul_small.png'/>");
-			$(".character-selection-section").appentTo("<img class ='character' id='vader' src = 'assets/images/darth_vader_small.png' />")
+			// $(".character-selection-section").html("<img id='rey' />")
+			// $(".character-selection-section").html("<img id='luke'/>")
+			// $(".character-selection-section").html("<img id='maul' />")
+			// $(".character-selection-section").html("<img id='vader' />")
 			$("#rey").appendTo(".character-selection-section");
 			$("#luke").appendTo(".character-selection-section");
 			$("#maul").appendTo(".character-selection-section");
 			$("#vader").appendTo(".character-selection-section");
+
 			console.log("game has reset");
-			playerSelect();
 	}
 
 	function gameWin() {
@@ -338,7 +376,8 @@ $(document).ready(function() {
 	function startBattle(){
 		$("#attack-button").on("click", function() {
 			console.log("button pressed");
-			if (gameStart === true){   	
+			if (gameStart === true){
+		        lightsaberClash.play();    	
 				attack();
 				increaseAttackPower();
 				if (opponent.healthPoints <= 0){
