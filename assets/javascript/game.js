@@ -52,9 +52,11 @@ $(document).ready(function() {
 	var palpatineStrong = new Audio ("assets/audio/palpatine_strong.mp3");
 	var palpatineDestroyed = new Audio ("assets/audio/palpatine_destroyed.mp3");
 	var palpatinePowerful = new Audio ("assets/audio/palpatine_powerful.mp3");
+	var maulTheme = new Audio ("assets/audio/maul_theme.mp3");
 
 	playerSelect();
-
+	// maulTheme.currentTime = 0;
+	// maulTheme.play();
 	startBattle();
 
 	function playerSelect(){
@@ -71,7 +73,7 @@ $(document).ready(function() {
 				player = rey;			
 				$("#rey").addClass('flipped');
 				palpatineApprentice.play();
-				setTimeout(enemySelect, 1000 *2.5);
+				setTimeout(enemySelect, 1000 *2);
 					console.log("player one is " + playerOneSelected);
 				}
 		});	
@@ -90,7 +92,7 @@ $(document).ready(function() {
 				$("#luke").addClass('flipped');
 				palpatineApprentice.play();
 					console.log("player one is " + playerOneSelected);
-				setTimeout(enemySelect, 1000 *2.5);
+				setTimeout(enemySelect, 1000 *2);
 			}
 		});	
 	
@@ -108,7 +110,7 @@ $(document).ready(function() {
 				player = maul;
 				palpatineApprentice.play();
 					console.log("player one is " + playerOneSelected);
-				setTimeout(enemySelect, 1000 *2.5);
+				setTimeout(enemySelect, 1000 *2);
 			}
 		});	
 	
@@ -127,7 +129,7 @@ $(document).ready(function() {
 				$("#vader").addClass('flipped');
 				palpatineApprentice.play();
 					console.log("player one is " + playerOneSelected);
-				setTimeout(enemySelect, 1000 *2.5);
+				setTimeout(enemySelect, 1000 *2);
 			}
 		});	
 	}
@@ -222,8 +224,7 @@ $(document).ready(function() {
 				else if (enemiesRemaining === 1){
 					palpatineStrong.play();
 		}
-			$("#opponent-fight-area").html('');
-			$("#opponent-").html('');
+			$("#opponent-fight-area").empty();
 			$("#opponent-name").text("");
 			$("#opponent-total-hp").text("");
 			setTimeout(function(){playerTwoSelected = false}, 1000 * 2.8);
@@ -233,8 +234,8 @@ $(document).ready(function() {
 	}
 
 	function attack(){
-		options = {duration: 200,
-			easing: 'linear'}
+		// options = {duration: 200,
+		// 	easing: 'linear'}
 		opponent.healthPoints = opponent.healthPoints - player.attackPower;
 		$("#opponent-total-hp").text(opponent.healthPoints);
 			console.log("opponent HP is " + opponent.healthPoints);
@@ -259,32 +260,46 @@ $(document).ready(function() {
 	}	
 	//starst the game over again
 	function gameReset(){
-			var players = 	[rey = {
+			[rey = {
+						name: "Rey",
 						healthPoints: 120,
+						initialAttackPower: 8,
 						attackPower: 8,
+						counterAttackPower: 2,
 						isPlayerOne: false,
 						isPlayerTwo: false,
 					}, 
 					luke = {
+						name: "Luke Skywalker",
 						healthPoints: 100,
+						initialAttackPower: 9,
 						attackPower: 9,
+						counterAttackPower: 5,
 						isPlayerOne: false,
 						isPlayerTwo: false,
 					},
 					maul = {
-						healthPoints: 150,	
+						name: "Darth Maul",
+						healthPoints: 150,
+						initialAttackPower: 2,	
 						attackPower: 2,
+						counterAttackPower: 20,
 						isPlayerOne: false,
 						isPlayerTwo: false,
 					},
 					vader = {
+						name: "Darth Vader",
 						healthPoints: 180,
+						initialAttackPower: 1,
 						attackPower: 1,
+						counterAttackPower: 25,
 						isPlayerOne: false,
 						isPlayerTwo: false,
 					}]				
 			playerOneSelected = false;
 			playerTwoSelected = false;
+			enemiesRemaining = players.length - 1;
+			$("#select-text").text("Select your Character")
 			$("#game-end-container",).html("");
 			$("#game-end-text-container").html("");
 			$("#opponent-name").text("");
@@ -296,19 +311,16 @@ $(document).ready(function() {
 			$("#player-fight-area").html("");
 			$("#opponent-fight-area").html("");
 			$(".character-selection-section").html("");
-			$(".character-selection-section").appendTo("<img class ='character' id='rey' src = 'assets/images/rey_small.png'/>");
-			$(".character-selection-section").appendTo("<img class ='character' id='luke' src = 'assets/images/luke_skywalker_small.png'/>");
-			$(".character-selection-section").appendTo("<img class ='character' id='maul' src = 'assets/images/darth_maul_small.png'/>");
-			$(".character-selection-section").appentTo("<img class ='character' id='vader' src = 'assets/images/darth_vader_small.png' />")
-			$("#rey").appendTo(".character-selection-section");
-			$("#luke").appendTo(".character-selection-section");
-			$("#maul").appendTo(".character-selection-section");
-			$("#vader").appendTo(".character-selection-section");
+			$("<img class ='character' id='maul' src = 'assets/images/darth_maul_small.png'/>").appendTo(".character-selection-section");
+			$("<img class ='character' id='luke' src = 'assets/images/luke_skywalker_small.png'/>").appendTo(".character-selection-section");
+			$("<img class ='character' id='rey' src = 'assets/images/rey_small.png'/>").appendTo(".character-selection-section");
+			$("<img class ='character' id='vader' src = 'assets/images/darth_vader_small.png' />").appendTo(".character-selection-section");
 			console.log("game has reset");
 			playerSelect();
 	}
 
 	function gameWin() {
+		maulTheme.pause();
 		$("#opponent-total-hp").text(0);
 		console.log("you win")	
 		gameStart = false;
@@ -318,7 +330,7 @@ $(document).ready(function() {
 		$("#game-end-text-container").css({"color":"red", "font-size":"30px","font-family":"Trade Winds", 
 			"position":"absolute", "left":"50%", "margin-right":"-50%", "transform":"translate(-50%)", 
 			"text-shadow": "2px 2px 2px rgba(255,255,255,.6)"});
-		setTimeout(gameReset, 1000 * 10);
+		setTimeout(gameReset, 1000 * 8);
 	}
 
 	function gameLose() {
@@ -331,7 +343,7 @@ $(document).ready(function() {
 		$("#game-end-text-container").css({"color":"red", "font-size":"30px","font-family":"Trade Winds", 
 			"position":"absolute", "left":"50%", "margin-right":"-50%", "transform":"translate(-50%)", 
 			"text-shadow": "2px 2px 2px rgba(255,255,255,.6)"});
-		setTimeout(gameReset, 1000 * 10);	
+		setTimeout(gameReset, 1000 * 8);	
 	}
 	//this is the main battle code, once players have been selected. use the attack button to
 	//initiate attacks. 
