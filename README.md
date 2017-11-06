@@ -11,6 +11,8 @@ Due: 10/28/17
 
 As I am a big fan of Star Wars, i was eager to tackle this project that was a Star Wars RPG!  I found this assignment to be quite challenging, as I still did not fully understand how to manipulate the HTML and CSS using JS and jQuery.  My game required the fighters to move to different spots depending on different actions by the users, and interaction between different objects, which had different stats.  It took me the full week to make this, but was well worth it.
 
+This required me to use a fair bit of photo and audio editing, of which I have a decent amount of amatuer skills.
+
 Future versions will include animating the fighters so they appear to fight each other.
 
 
